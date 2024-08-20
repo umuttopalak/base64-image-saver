@@ -1,6 +1,7 @@
 import base64
 import io
 import json
+import os
 import tkinter as tk
 from tkinter import Button, Canvas, Frame, Label, Scrollbar, filedialog
 
@@ -39,9 +40,45 @@ class ImageSelectorApp(tk.Tk):
             self, text="Save File", command=self.save_base64_data, state='disabled')
         self.save_button.pack(side='bottom', fill='x')
 
+        self.convert_to_image_button = Button(
+            self, text="Convert To Image", command=self.convert_to_image)
+        self.convert_to_image_button.pack(side='bottom', fill='x')
+
         self.images = []
         self.file_paths = []
         self.image_datas = []
+
+    def convert_to_image(self):
+        json_file = filedialog.askopenfilename(
+            title="Select JSON File", filetypes=[("JSON Files", ".json")])
+
+        if not json_file:
+            return
+
+        save_directory = filedialog.askdirectory(
+            title="Select Directory to Save Images")
+
+        if not save_directory:
+            save_directory = os.getcwd()
+
+        with open(json_file, "r") as f:
+            data = json.loads(f.read())
+
+        for item in data:
+            file_name = item.get("file_name")
+            base64_data = item.get("data")
+
+            if file_name and base64_data:
+                image_data = base64.b64decode(base64_data)
+
+                image = Image.open(io.BytesIO(image_data))
+
+                save_path = os.path.join(save_directory, file_name)
+                image.save(save_path)
+
+                print(f"Saved {file_name} to {save_path}")
+            else:
+                print("Invalid data in JSON")
 
     def update_button_states(self):
         if self.file_paths:
@@ -66,14 +103,13 @@ class ImageSelectorApp(tk.Tk):
 
     def image_to_base64(self, image_path):
         with Image.open(image_path) as img:
-            # Convert RGBA to RGB if necessary
             if img.mode != 'RGB':
                 img = img.convert('RGB')
-    
+
             buffered = io.BytesIO()
             img.save(buffered, format="JPEG")
             img_byte = buffered.getvalue()
-    
+
         img_base64 = base64.b64encode(img_byte)
         return img_base64.decode('utf-8')
 
