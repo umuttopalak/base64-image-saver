@@ -1,10 +1,11 @@
 import base64
+import gzip
 import io
-import json
 import os
 import tkinter as tk
 from tkinter import Button, Canvas, Frame, Label, Scrollbar, filedialog
 
+import msgpack
 from PIL import Image, ImageTk
 
 
@@ -15,21 +16,18 @@ class ImageSelectorApp(tk.Tk):
         self.geometry("450x500")
 
         self.canvas = Canvas(self)
-        self.scroll_y = Scrollbar(
-            self, orient="vertical", command=self.canvas.yview)
+        self.scroll_y = Scrollbar(self, orient="vertical", command=self.canvas.yview)
 
         self.frame = Frame(self.canvas)
         self.canvas.create_window((0, 0), window=self.frame, anchor='nw')
 
-        self.frame.bind("<Configure>", lambda e: self.canvas.configure(
-            scrollregion=self.canvas.bbox("all")))
+        self.frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
         self.canvas.configure(yscrollcommand=self.scroll_y.set)
 
         self.canvas.pack(fill='both', expand=True, side='left')
         self.scroll_y.pack(fill='y', side='right')
 
-        self.select_button = Button(
-            self, text="Select Images", command=self.on_select_images)
+        self.select_button = Button(self, text="Select Images", command=self.on_select_images)
         self.select_button.pack(side='bottom', fill='x')
 
         self.convert_button = Button(
@@ -49,10 +47,10 @@ class ImageSelectorApp(tk.Tk):
         self.image_datas = []
 
     def convert_to_image(self):
-        json_file = filedialog.askopenfilename(
-            title="Select JSON File", filetypes=[("JSON Files", ".json")])
+        msgpack_file = filedialog.askopenfilename(
+            title="Select MessagePack File", filetypes=[("MessagePack Files", ".msgpack")])
 
-        if not json_file:
+        if not msgpack_file:
             return
 
         save_directory = filedialog.askdirectory(
@@ -61,12 +59,15 @@ class ImageSelectorApp(tk.Tk):
         if not save_directory:
             save_directory = os.getcwd()
 
-        with open(json_file, "r") as f:
-            data = json.loads(f.read())
+        with open(msgpack_file, "rb") as f:
+            compressed_data = f.read()
+
+        decompressed_data = gzip.decompress(compressed_data)
+        data = msgpack.unpackb(decompressed_data, raw=False)
 
         for item in data:
-            file_name = item.get("file_name")
-            base64_data = item.get("data")
+            file_name = item.get("f")
+            base64_data = item.get("d")
 
             if file_name and base64_data:
                 image_data = base64.b64decode(base64_data)
@@ -78,7 +79,7 @@ class ImageSelectorApp(tk.Tk):
 
                 print(f"Saved {file_name} to {save_path}")
             else:
-                print("Invalid data in JSON")
+                print("Invalid data in MessagePack")
 
     def update_button_states(self):
         if self.file_paths:
@@ -97,7 +98,7 @@ class ImageSelectorApp(tk.Tk):
             for file_path in self.file_paths:
                 base64_data = self.image_to_base64(file_path)
                 self.image_datas.append(
-                    {"file_name": file_path.split('/')[-1], "data": base64_data})
+                    {"f": file_path.split('/')[-1], "d": base64_data})
             print("Conversion Complete.")
         self.update_button_states()
 
@@ -136,16 +137,19 @@ class ImageSelectorApp(tk.Tk):
         button.pack_forget()
         self.file_paths.remove(file_path)
         self.image_datas = [
-            data for data in self.image_datas if data["file_name"] != file_path.split('/')[-1]]
+            data for data in self.image_datas if data["f"] != file_path.split('/')[-1]]
         self.update_button_states()
 
     def save_base64_data(self):
         if self.image_datas:
             file_path = filedialog.asksaveasfilename(
-                defaultextension=".json", filetypes=[("JSON Files", "*.json")])
+                defaultextension=".msgpack", filetypes=[("MessagePack Files", "*.msgpack")])
             if file_path:
-                with open(file_path, 'w') as file:
-                    json.dump(self.image_datas, file, indent=4)
+                packed_data = msgpack.packb(self.image_datas, use_bin_type=True)
+                compressed_data = gzip.compress(packed_data)
+
+                with open(file_path, 'wb') as file:
+                    file.write(compressed_data)
                 print(f"Data saved to {file_path}.")
         else:
             print("No data to save.")
