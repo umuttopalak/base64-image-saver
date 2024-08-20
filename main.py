@@ -11,23 +11,52 @@ from PIL import Image, ImageTk
 
 class ImageSelectorApp(tk.Tk):
     def __init__(self):
+        """
+    A GUI application for selecting and manipulating images.
+
+    Attributes:
+        canvas (Canvas): The canvas widget for displaying images.
+        scroll_y (Scrollbar): The vertical scrollbar widget for the canvas.
+        frame (Frame): The frame widget inside the canvas.
+        select_button (Button): The button for selecting images.
+        convert_button (Button): The button for converting images to base64.
+        save_button (Button): The button for saving base64 data.
+        convert_to_image_button (Button): The button for converting base64 data to images.
+        images (list): A list to store the images.
+        file_paths (list): A list to store the file paths of the selected images.
+        image_datas (list): A list to store the base64 data of the images.
+
+    Methods:
+        convert_to_image: Converts base64 data to images.
+        update_button_states: Updates the states of the buttons based on the current state of the application.
+        convert_images: Converts the selected images to base64 data.
+        image_to_base64: Converts an image to base64 data.
+        on_select_images: Handles the event when the select button is clicked.
+        show_image: Displays an image on the canvas.
+        delete_image: Deletes an image from the canvas.
+        save_base64_data: Saves the base64 data to a file.
+    """
+        pass
         super().__init__()
         self.title("Image Selector")
         self.geometry("450x500")
 
         self.canvas = Canvas(self)
-        self.scroll_y = Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.scroll_y = Scrollbar(
+            self, orient="vertical", command=self.canvas.yview)
 
         self.frame = Frame(self.canvas)
         self.canvas.create_window((0, 0), window=self.frame, anchor='nw')
 
-        self.frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+        self.frame.bind("<Configure>", lambda e: self.canvas.configure(
+            scrollregion=self.canvas.bbox("all")))
         self.canvas.configure(yscrollcommand=self.scroll_y.set)
 
         self.canvas.pack(fill='both', expand=True, side='left')
         self.scroll_y.pack(fill='y', side='right')
 
-        self.select_button = Button(self, text="Select Images", command=self.on_select_images)
+        self.select_button = Button(
+            self, text="Select Images", command=self.on_select_images)
         self.select_button.pack(side='bottom', fill='x')
 
         self.convert_button = Button(
@@ -145,7 +174,8 @@ class ImageSelectorApp(tk.Tk):
             file_path = filedialog.asksaveasfilename(
                 defaultextension=".msgpack", filetypes=[("MessagePack Files", "*.msgpack")])
             if file_path:
-                packed_data = msgpack.packb(self.image_datas, use_bin_type=True)
+                packed_data = msgpack.packb(
+                    self.image_datas, use_bin_type=True)
                 compressed_data = gzip.compress(packed_data)
 
                 with open(file_path, 'wb') as file:
