@@ -1,6 +1,6 @@
 # Image Selector and Converter
 
-This project is a GUI application built using Python's [`tkinter`](command:_github.copilot.openSymbolFromReferences?%5B%22tkinter%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22path%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A4%2C%22character%22%3A7%7D%7D%5D%5D "Go to definition") library. It allows users to select images, convert them to Base64 format, save the Base64 data to a JSON file, and convert Base64 data back to images.
+This project is a GUI application built using Python's `tkinter` library. It allows users to select images, convert them to Base64 format, save the Base64 data to a JSON file, and convert Base64 data back to images.
 
 ## Features
 
@@ -19,8 +19,8 @@ This project is a GUI application built using Python's [`tkinter`](command:_gith
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/umuttopalak/base64-image-saver.git
+    cd base64-image-saver
     ```
 
 2. **Install the required libraries**:
@@ -49,12 +49,12 @@ This project is a GUI application built using Python's [`tkinter`](command:_gith
 
 ## Project Structure
 
-- [`main.py`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "/Users/umuttopalak/projects/base64-image-saver/main.py"): The main script containing the [`ImageSelectorApp`](command:_github.copilot.openSymbolFromReferences?%5B%22ImageSelectorApp%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22path%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A10%2C%22character%22%3A6%7D%7D%5D%5D "Go to definition") class and its methods.
-- [`README.md`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2FREADME.md%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "/Users/umuttopalak/projects/base64-image-saver/README.md"): This file.
+- `main.py` class and its methods.
+- `README.md` This file.
 
 ## License
 
-This project is licensed under the MIT License. See the [`LICENSE`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2FLICENSE%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "/Users/umuttopalak/projects/base64-image-saver/LICENSE") file for details.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Contributing
 
@@ -63,11 +63,11 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 ## Acknowledgements
 
 - [Pillow](https://python-pillow.org/) for image processing.
-- Python's [`tkinter`](command:_github.copilot.openSymbolFromReferences?%5B%22tkinter%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22path%22%3A%22%2FUsers%2Fumuttopalak%2Fprojects%2Fbase64-image-saver%2Fmain.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A4%2C%22character%22%3A7%7D%7D%5D%5D "Go to definition") library for the GUI.
+- Python's `tkinter` library for the GUI.
 
 ## Contact
 
-For any questions or suggestions, please contact [your-email@example.com](mailto:your-email@example.com).
+For any questions or suggestions, please contact [umuttopalak@hotmail.com](mailto:umuttopalak@hotmail.com).
 
 ---
 
