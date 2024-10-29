@@ -25,7 +25,7 @@ This project is a GUI application built using Python's `tkinter` library. It all
 
 2. **Install the required libraries**:
     ```sh
-    pip install pillow
+    pip install -r requirements.txt
     ```
 
 ## Usage
